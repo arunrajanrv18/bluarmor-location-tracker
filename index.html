@@ -196,12 +196,45 @@
 
   /* ── DUAL LAYOUT ── */
   .dual { display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; }
-  @media (max-width: 700px) { .dual { grid-template-columns: 1fr; } }
 
   /* ── SCROLLBAR ── */
   ::-webkit-scrollbar { width: 6px; height: 6px; }
   ::-webkit-scrollbar-track { background: var(--bg); }
   ::-webkit-scrollbar-thumb { background: var(--border); border-radius: 3px; }
+
+  /* ── MOBILE ── */
+  @media (max-width: 600px) {
+    nav { padding: 0 1rem; height: auto; flex-direction: column; align-items: flex-start; padding-top: 10px; padding-bottom: 0; }
+    .nav-brand { margin-right: 0; margin-bottom: 6px; font-size: 11px; }
+    .nav-links { width: 100%; overflow-x: auto; -webkit-overflow-scrolling: touch; padding-bottom: 2px; }
+    .nav-btn { font-size: 12px; padding: 0 12px; height: 40px; }
+
+    .page { padding: 1.25rem 1rem 3rem; }
+    .page-header { margin-bottom: 1.5rem; }
+    .page-header h1 { font-size: 16px; }
+    .page-header p { font-size: 12px; }
+
+    .chart-card { padding: 1rem; border-radius: 10px; margin-bottom: 1.25rem; }
+    .chart-title { font-size: 11px; }
+    .chart-subtitle { font-size: 12px; margin-bottom: 1rem; }
+    .chart-wrap { height: 260px; }
+
+    .overview-grid { grid-template-columns: 1fr 1fr; gap: 0.75rem; }
+    .kpi-card { padding: 0.9rem 1rem; }
+    .kpi-val { font-size: 18px; }
+    .kpi-sub { font-size: 11px; }
+
+    .legend { gap: 6px 12px; }
+    .legend-item { font-size: 11px; }
+
+    .dual { grid-template-columns: 1fr; }
+    .callout { font-size: 12px; padding: 0.75rem 1rem; }
+    .ov-grid { grid-template-columns: 1fr !important; }
+  }
+
+  @media (max-width: 380px) {
+    .overview-grid { grid-template-columns: 1fr; }
+  }
 </style>
 </head>
 <body>
@@ -250,7 +283,7 @@
   <div class="chart-card">
     <div class="chart-title">All metrics at a glance — 15s interval</div>
     <div class="chart-subtitle">Each bar shows one device's value at 15s — lower is better for all metrics</div>
-    <div style="display:grid;grid-template-columns:1fr 1fr;gap:1.5rem;margin-top:1rem;">
+    <div class="ov-grid" style="display:grid;grid-template-columns:1fr 1fr;gap:1.5rem;margin-top:1rem;">
       <div><div style="font-size:12px;color:#9ca3af;margin-bottom:8px;">Accuracy p50 (m)</div><div style="position:relative;height:190px;"><canvas id="ov-p50" role="img" aria-label="p50 at 15s per device"></canvas></div></div>
       <div><div style="font-size:12px;color:#9ca3af;margin-bottom:8px;">Accuracy p95 (m)</div><div style="position:relative;height:190px;"><canvas id="ov-p95" role="img" aria-label="p95 at 15s per device"></canvas></div></div>
       <div><div style="font-size:12px;color:#9ca3af;margin-bottom:8px;">Battery drain (%/h)</div><div style="position:relative;height:190px;"><canvas id="ov-bat" role="img" aria-label="battery drain at 15s per device"></canvas></div></div>
