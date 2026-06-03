@@ -56,8 +56,9 @@
   h1.page-title { font-family: 'Space Mono', monospace; font-size: clamp(15px, 4vw, 24px); font-weight: 700; color: var(--text); letter-spacing: -0.02em; }
   .page-desc { font-size: 13px; color: var(--muted); }
   .mini-label { font-size: 12px; color: var(--muted); }
-  .mini-wrap  { position: relative; height: 180px; }
+  .mini-wrap  { position: relative; height: 180px; width: 100%; min-width: 0; }
   @media (max-width: 576px) { .mini-wrap { height: 160px; } }
+  .col-12, .col-sm-6 { min-width: 0; }
 </style>
 </head>
 <body>
@@ -125,25 +126,25 @@
       <div class="chart-title mb-1">All metrics at a glance — 15s interval</div>
       <div class="chart-subtitle mb-3">Each bar shows one device's value at 15s — lower is better for all metrics</div>
       <div class="row g-3">
-        <div class="col-12 col-sm-6">
+        <div class="col-12 col-md-6" style="min-width:0;overflow:hidden;">
           <div class="mini-label mb-1">Accuracy p50 (m)</div>
-          <div class="mini-wrap"><canvas id="ov-p50" role="img" aria-label="p50 per device at 15s"></canvas></div>
+          <div style="position:relative;width:100%;height:180px;"><canvas id="ov-p50" role="img" aria-label="p50 per device at 15s"></canvas></div>
         </div>
-        <div class="col-12 col-sm-6">
+        <div class="col-12 col-md-6" style="min-width:0;overflow:hidden;">
           <div class="mini-label mb-1">Accuracy p95 (m)</div>
-          <div class="mini-wrap"><canvas id="ov-p95" role="img" aria-label="p95 per device at 15s"></canvas></div>
+          <div style="position:relative;width:100%;height:180px;"><canvas id="ov-p95" role="img" aria-label="p95 per device at 15s"></canvas></div>
         </div>
-        <div class="col-12 col-sm-6">
+        <div class="col-12 col-md-6" style="min-width:0;overflow:hidden;">
           <div class="mini-label mb-1">Battery drain (%/h)</div>
-          <div class="mini-wrap"><canvas id="ov-bat" role="img" aria-label="battery per device at 15s"></canvas></div>
+          <div style="position:relative;width:100%;height:180px;"><canvas id="ov-bat" role="img" aria-label="battery per device at 15s"></canvas></div>
         </div>
-        <div class="col-12 col-sm-6">
+        <div class="col-12 col-md-6" style="min-width:0;overflow:hidden;">
           <div class="mini-label mb-1">Max gap (ms)</div>
-          <div class="mini-wrap"><canvas id="ov-gap" role="img" aria-label="max gap per device at 15s"></canvas></div>
+          <div style="position:relative;width:100%;height:180px;"><canvas id="ov-gap" role="img" aria-label="max gap per device at 15s"></canvas></div>
         </div>
-        <div class="col-12">
+        <div class="col-12" style="min-width:0;overflow:hidden;">
           <div class="mini-label mb-1">Mean temperature (°C)</div>
-          <div class="mini-wrap"><canvas id="ov-tmp" role="img" aria-label="temperature per device at 15s"></canvas></div>
+          <div style="position:relative;width:100%;height:180px;"><canvas id="ov-tmp" role="img" aria-label="temperature per device at 15s"></canvas></div>
         </div>
       </div>
     </div>
