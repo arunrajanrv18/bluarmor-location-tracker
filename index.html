@@ -4,501 +4,299 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>BluArmor Location Tracker — Config Comparison</title>
-<link href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&family=DM+Sans:wght@400;500;600&display=swap" rel="stylesheet">
 <style>
   :root {
-    --bg:        #0b0e14;
-    --surface:   #13171f;
-    --surface2:  #1a1f2b;
-    --border:    #252b38;
-    --text:      #e8eaf0;
-    --muted:     #6b7280;
-    --accent:    #3b82f6;
-
-    --c0: #60a5fa;
-    --c1: #34d399;
-    --c2: #f87171;
-    --c3: #fbbf24;
-    --c4: #a78bfa;
-    --c5: #fb923c;
+    --bg: #0b0e14;
+    --surface: #13171f;
+    --surface2: #1a1f2b;
+    --border: #252b38;
+    --text: #e8eaf0;
+    --muted: #6b7280;
+    --accent: #3b82f6;
   }
+  body { background: var(--bg); color: var(--text); font-family: 'DM Sans', sans-serif; }
 
-  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  /* NAV */
+  .navbar { background: rgba(11,14,20,0.96) !important; border-bottom: 1px solid var(--border); backdrop-filter: blur(12px); }
+  .navbar-brand { font-family: 'Space Mono', monospace; font-size: 12px; letter-spacing: 0.1em; color: var(--accent) !important; text-transform: uppercase; }
+  .nav-link { color: var(--muted) !important; font-size: 13px; font-weight: 500; border-bottom: 2px solid transparent; padding-bottom: 6px; }
+  .nav-link.active, .nav-link:hover { color: var(--text) !important; border-bottom-color: var(--accent); }
+  .navbar-toggler { border-color: var(--border); }
+  .navbar-toggler-icon { filter: invert(1); }
 
-  html { scroll-behavior: smooth; }
-
-  body {
-    background: var(--bg);
-    color: var(--text);
-    font-family: 'DM Sans', sans-serif;
-    font-size: 15px;
-    line-height: 1.6;
-    min-height: 100vh;
-  }
-
-  /* ── NAV ── */
-  nav {
-    position: sticky;
-    top: 0;
-    z-index: 100;
-    background: rgba(11,14,20,0.92);
-    backdrop-filter: blur(12px);
-    border-bottom: 1px solid var(--border);
-    display: flex;
-    align-items: center;
-    gap: 0;
-    padding: 0 2rem;
-    height: 56px;
-    overflow-x: auto;
-  }
-
-  .nav-brand {
-    font-family: 'Space Mono', monospace;
-    font-size: 12px;
-    font-weight: 700;
-    letter-spacing: 0.12em;
-    color: var(--accent);
-    text-transform: uppercase;
-    white-space: nowrap;
-    margin-right: 2rem;
-    flex-shrink: 0;
-  }
-
-  .nav-links { display: flex; gap: 0; }
-
-  .nav-btn {
-    background: none;
-    border: none;
-    color: var(--muted);
-    font-family: 'DM Sans', sans-serif;
-    font-size: 13px;
-    font-weight: 500;
-    padding: 0 16px;
-    height: 56px;
-    cursor: pointer;
-    white-space: nowrap;
-    border-bottom: 2px solid transparent;
-    transition: color 0.2s, border-color 0.2s;
-  }
-  .nav-btn:hover { color: var(--text); }
-  .nav-btn.active { color: var(--text); border-bottom-color: var(--accent); }
-
-  /* ── PAGES ── */
-  .page { display: none; padding: 2.5rem 2rem 4rem; max-width: 1100px; margin: 0 auto; }
+  /* PAGES */
+  .page { display: none; }
   .page.active { display: block; }
 
-  /* ── HERO ── */
-  .page-header { margin-bottom: 2.5rem; }
-  .page-header h1 {
-    font-family: 'Space Mono', monospace;
-    font-size: clamp(18px, 3vw, 26px);
-    font-weight: 700;
-    color: var(--text);
-    letter-spacing: -0.02em;
-    margin-bottom: 6px;
-  }
-  .page-header p { color: var(--muted); font-size: 14px; }
+  /* CARDS */
+  .chart-card { background: var(--surface); border: 1px solid var(--border); border-radius: 12px; }
+  .kpi-card   { background: var(--surface); border: 1px solid var(--border); border-radius: 10px; }
+  .kpi-label  { font-size: 11px; color: var(--muted); text-transform: uppercase; letter-spacing: 0.1em; }
+  .kpi-val    { font-family: 'Space Mono', monospace; font-size: 22px; font-weight: 700; color: var(--text); }
+  .kpi-sub    { font-size: 12px; color: var(--muted); }
+  .chart-title { font-family: 'Space Mono', monospace; font-size: 12px; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase; color: var(--text); }
+  .chart-subtitle { font-size: 13px; color: var(--muted); }
+  .chart-wrap { position: relative; width: 100%; height: 300px; }
+  @media (max-width: 576px) { .chart-wrap { height: 230px; } .kpi-val { font-size: 18px; } }
 
-  /* ── CHART CARDS ── */
-  .chart-card {
-    background: var(--surface);
-    border: 1px solid var(--border);
-    border-radius: 12px;
-    padding: 1.75rem 2rem 1.5rem;
-    margin-bottom: 2rem;
-  }
-
-  .chart-title {
-    font-family: 'Space Mono', monospace;
-    font-size: 13px;
-    font-weight: 700;
-    letter-spacing: 0.06em;
-    color: var(--text);
-    text-transform: uppercase;
-    margin-bottom: 4px;
-  }
-
-  .chart-subtitle { font-size: 13px; color: var(--muted); margin-bottom: 1.5rem; }
-
-  .chart-wrap { position: relative; width: 100%; height: 340px; }
-
-  /* ── LEGEND ── */
-  .legend {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 8px 20px;
-    margin-bottom: 1.25rem;
-  }
-  .legend-item {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    font-size: 12px;
-    color: var(--muted);
-    cursor: pointer;
-    transition: color 0.15s;
-  }
+  /* LEGEND */
+  .legend-wrap { display: flex; flex-wrap: wrap; gap: 6px 16px; }
+  .legend-item { display: flex; align-items: center; gap: 7px; font-size: 12px; color: var(--muted); cursor: pointer; }
   .legend-item:hover { color: var(--text); }
-  .legend-item.hidden { opacity: 0.35; }
-  .legend-swatch {
-    width: 24px;
-    height: 3px;
-    border-radius: 2px;
-    flex-shrink: 0;
-  }
-  .legend-dot {
-    width: 8px;
-    height: 8px;
-    border-radius: 50%;
-    flex-shrink: 0;
-  }
+  .legend-item.hidden { opacity: 0.3; }
+  .legend-swatch { width: 22px; height: 3px; border-radius: 2px; flex-shrink: 0; }
 
-  /* ── OVERVIEW PAGE ── */
-  .overview-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-    gap: 1rem;
-    margin-bottom: 2rem;
-  }
-  .kpi-card {
-    background: var(--surface);
-    border: 1px solid var(--border);
-    border-radius: 10px;
-    padding: 1.25rem 1.5rem;
-  }
-  .kpi-label { font-size: 11px; color: var(--muted); text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 8px; }
-  .kpi-val { font-family: 'Space Mono', monospace; font-size: 22px; font-weight: 700; color: var(--text); }
-  .kpi-sub { font-size: 12px; color: var(--muted); margin-top: 4px; }
+  /* CALLOUT */
+  .callout { background: var(--surface2); border-left: 3px solid var(--accent); border-radius: 0 8px 8px 0; font-size: 13px; color: var(--muted); }
+  .callout strong { color: var(--text); }
 
-  .tag {
-    display: inline-block;
-    font-size: 11px;
-    font-weight: 600;
-    padding: 2px 8px;
-    border-radius: 4px;
-    margin-left: 6px;
-    vertical-align: middle;
-  }
-  .tag-green { background: #052814; color: #34d399; }
-  .tag-red   { background: #1f0a0a; color: #f87171; }
-
-  /* ── CALLOUT ── */
-  .callout {
-    background: var(--surface2);
-    border-left: 3px solid var(--accent);
-    border-radius: 0 8px 8px 0;
-    padding: 1rem 1.25rem;
-    font-size: 13px;
-    color: var(--muted);
-    margin-top: 1rem;
-  }
-  .callout strong { color: var(--text); font-weight: 600; }
-
-  /* ── DUAL LAYOUT ── */
-  .dual { display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; }
-
-  /* ── SCROLLBAR ── */
-  ::-webkit-scrollbar { width: 6px; height: 6px; }
-  ::-webkit-scrollbar-track { background: var(--bg); }
-  ::-webkit-scrollbar-thumb { background: var(--border); border-radius: 3px; }
-
-  /* ── MOBILE ── */
-  @media (max-width: 600px) {
-    nav { padding: 0 1rem; height: auto; flex-direction: column; align-items: flex-start; padding-top: 10px; padding-bottom: 0; }
-    .nav-brand { margin-right: 0; margin-bottom: 6px; font-size: 11px; }
-    .nav-links { width: 100%; overflow-x: auto; -webkit-overflow-scrolling: touch; padding-bottom: 2px; }
-    .nav-btn { font-size: 12px; padding: 0 12px; height: 40px; }
-
-    .page { padding: 1.25rem 1rem 3rem; }
-    .page-header { margin-bottom: 1.5rem; }
-    .page-header h1 { font-size: 16px; }
-    .page-header p { font-size: 12px; }
-
-    .chart-card { padding: 1rem; border-radius: 10px; margin-bottom: 1.25rem; }
-    .chart-title { font-size: 11px; }
-    .chart-subtitle { font-size: 12px; margin-bottom: 1rem; }
-    .chart-wrap { height: 260px; }
-
-    .overview-grid { grid-template-columns: 1fr 1fr; gap: 0.75rem; }
-    .kpi-card { padding: 0.9rem 1rem; }
-    .kpi-val { font-size: 18px; }
-    .kpi-sub { font-size: 11px; }
-
-    .legend { gap: 6px 12px; }
-    .legend-item { font-size: 11px; }
-
-    .dual { grid-template-columns: 1fr; }
-    .callout { font-size: 12px; padding: 0.75rem 1rem; }
-    .ov-grid { grid-template-columns: 1fr !important; }
-  }
-
-  @media (max-width: 380px) {
-    .overview-grid { grid-template-columns: 1fr; }
-  }
+  /* MISC */
+  h1.page-title { font-family: 'Space Mono', monospace; font-size: clamp(15px, 4vw, 24px); font-weight: 700; color: var(--text); letter-spacing: -0.02em; }
+  .page-desc { font-size: 13px; color: var(--muted); }
+  .mini-label { font-size: 12px; color: var(--muted); }
+  .mini-wrap  { position: relative; height: 180px; }
+  @media (max-width: 576px) { .mini-wrap { height: 160px; } }
 </style>
 </head>
 <body>
 
-<nav>
-  <div class="nav-brand">BluArmor Location Tracker</div>
-  <div class="nav-links">
-    <button class="nav-btn active" data-page="overview">Overview</button>
-    <button class="nav-btn" data-page="accuracy">Accuracy</button>
-    <button class="nav-btn" data-page="battery">Battery Drain</button>
-    <button class="nav-btn" data-page="maxgap">Max Gap</button>
-    <button class="nav-btn" data-page="temp">Temperature</button>
+<!-- NAVBAR -->
+<nav class="navbar navbar-expand-md sticky-top">
+  <div class="container-fluid px-3">
+    <span class="navbar-brand">BluArmor Location Tracker</span>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navMenu">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navMenu">
+      <ul class="navbar-nav ms-auto gap-1">
+        <li class="nav-item"><a class="nav-link active" href="#" data-page="overview">Overview</a></li>
+        <li class="nav-item"><a class="nav-link" href="#" data-page="accuracy">Accuracy</a></li>
+        <li class="nav-item"><a class="nav-link" href="#" data-page="battery">Battery</a></li>
+        <li class="nav-item"><a class="nav-link" href="#" data-page="maxgap">Max Gap</a></li>
+        <li class="nav-item"><a class="nav-link" href="#" data-page="temp">Temperature</a></li>
+      </ul>
+    </div>
   </div>
 </nav>
 
-<!-- ═══════════════════════════════════ OVERVIEW ══════════════════════════════════ -->
-<div class="page active" id="page-overview">
-  <div class="page-header">
-    <h1>Location Tracker — Config Comparison</h1>
-    <p>6 devices · 5 update intervals (1s → 1 min) · HIGH priority · All tests ≈ 2h duration</p>
-  </div>
+<div class="container-lg py-4 px-3">
 
-  <div class="overview-grid">
-    <div class="kpi-card">
-      <div class="kpi-label">Best accuracy (p50)</div>
-      <div class="kpi-val">3.08 m</div>
-      <div class="kpi-sub">Samsung SM-M356B @ 1s</div>
+  <!-- ══ OVERVIEW ══ -->
+  <div class="page active" id="page-overview">
+    <div class="mb-4">
+      <h1 class="page-title">Location Tracker — Config Comparison</h1>
+      <p class="page-desc">6 devices · 5 update intervals (1s → 1 min) · HIGH priority · All tests ≈ 2h duration</p>
     </div>
-    <div class="kpi-card">
-      <div class="kpi-label">Lowest battery drain</div>
-      <div class="kpi-val">0.46 %/h</div>
-      <div class="kpi-sub">Moto g67 &amp; OnePlus CPH2381 @ 1min</div>
-    </div>
-    <div class="kpi-card">
-      <div class="kpi-label">Sweet spot interval</div>
-      <div class="kpi-val">15s</div>
-      <div class="kpi-sub">Best accuracy / battery trade-off across all devices</div>
-    </div>
-    <div class="kpi-card">
-      <div class="kpi-label">Most reliable device</div>
-      <div class="kpi-val">Moto g67</div>
-      <div class="kpi-sub">Consistently low gap, drop rate, and battery draw</div>
-    </div>
-  </div>
 
-  <div class="chart-card">
-    <div class="chart-title">All metrics at a glance — 15s interval</div>
-    <div class="chart-subtitle">Each bar shows one device's value at 15s — lower is better for all metrics</div>
-    <div class="ov-grid" style="display:grid;grid-template-columns:1fr 1fr;gap:1.5rem;margin-top:1rem;">
-      <div><div style="font-size:12px;color:#9ca3af;margin-bottom:8px;">Accuracy p50 (m)</div><div style="position:relative;height:190px;"><canvas id="ov-p50" role="img" aria-label="p50 at 15s per device"></canvas></div></div>
-      <div><div style="font-size:12px;color:#9ca3af;margin-bottom:8px;">Accuracy p95 (m)</div><div style="position:relative;height:190px;"><canvas id="ov-p95" role="img" aria-label="p95 at 15s per device"></canvas></div></div>
-      <div><div style="font-size:12px;color:#9ca3af;margin-bottom:8px;">Battery drain (%/h)</div><div style="position:relative;height:190px;"><canvas id="ov-bat" role="img" aria-label="battery drain at 15s per device"></canvas></div></div>
-      <div><div style="font-size:12px;color:#9ca3af;margin-bottom:8px;">Max gap (ms)</div><div style="position:relative;height:190px;"><canvas id="ov-gap" role="img" aria-label="max gap at 15s per device"></canvas></div></div>
+    <div class="row g-3 mb-4">
+      <div class="col-6 col-md-3">
+        <div class="kpi-card p-3 h-100">
+          <div class="kpi-label mb-1">Best accuracy p50</div>
+          <div class="kpi-val">3.08 m</div>
+          <div class="kpi-sub mt-1">Samsung SM-M356B @ 1s</div>
+        </div>
+      </div>
+      <div class="col-6 col-md-3">
+        <div class="kpi-card p-3 h-100">
+          <div class="kpi-label mb-1">Lowest battery drain</div>
+          <div class="kpi-val">0.46 %/h</div>
+          <div class="kpi-sub mt-1">Moto g67 & CPH2381 @ 1min</div>
+        </div>
+      </div>
+      <div class="col-6 col-md-3">
+        <div class="kpi-card p-3 h-100">
+          <div class="kpi-label mb-1">Sweet spot interval</div>
+          <div class="kpi-val">15s</div>
+          <div class="kpi-sub mt-1">Best accuracy/battery trade-off</div>
+        </div>
+      </div>
+      <div class="col-6 col-md-3">
+        <div class="kpi-card p-3 h-100">
+          <div class="kpi-label mb-1">Most reliable device</div>
+          <div class="kpi-val">Moto g67</div>
+          <div class="kpi-sub mt-1">Lowest gap, drop & battery</div>
+        </div>
+      </div>
     </div>
-    <div style="margin-top:1.5rem;"><div style="font-size:12px;color:#9ca3af;margin-bottom:8px;">Mean temperature (°C)</div><div style="position:relative;height:190px;"><canvas id="ov-tmp" role="img" aria-label="temperature at 15s per device"></canvas></div></div>
-  </div>
 
-  <div class="callout">
-    The <strong>OnePlus A6000</strong> is a consistent outlier across metrics — aggressive background-process killing inflates its max gap, battery consumption, and accuracy degradation compared to the other five devices.
-  </div>
-</div>
-
-<!-- ═══════════════════════════════════ ACCURACY ══════════════════════════════════ -->
-<div class="page" id="page-accuracy">
-  <div class="page-header">
-    <h1>GPS Accuracy</h1>
-    <p>Median (p50) and 95th-percentile (p95) accuracy in metres — lower is better</p>
-  </div>
-
-  <div class="chart-card">
-    <div class="chart-title">Accuracy p50 — Median (m)</div>
-    <div class="chart-subtitle">50% of samples are within this distance from ground truth</div>
-    <div id="legend-p50" class="legend"></div>
-    <div class="chart-wrap"><canvas id="chart-p50" role="img" aria-label="P50 accuracy by interval per device"></canvas></div>
-    <div class="callout" style="margin-top:1.25rem">
-      <strong>Moto g67</strong> is the standout — stays under 6.5 m across all intervals. <strong>OnePlus A6000</strong> degrades severely at 1 min (200 m). <strong>Samsung SM-M356B</strong> excels at 1s (3.08 m) but drifts at longer intervals.
+    <div class="chart-card p-3 p-md-4 mb-4">
+      <div class="chart-title mb-1">All metrics at a glance — 15s interval</div>
+      <div class="chart-subtitle mb-3">Each bar shows one device's value at 15s — lower is better for all metrics</div>
+      <div class="row g-3">
+        <div class="col-12 col-sm-6">
+          <div class="mini-label mb-1">Accuracy p50 (m)</div>
+          <div class="mini-wrap"><canvas id="ov-p50" role="img" aria-label="p50 per device at 15s"></canvas></div>
+        </div>
+        <div class="col-12 col-sm-6">
+          <div class="mini-label mb-1">Accuracy p95 (m)</div>
+          <div class="mini-wrap"><canvas id="ov-p95" role="img" aria-label="p95 per device at 15s"></canvas></div>
+        </div>
+        <div class="col-12 col-sm-6">
+          <div class="mini-label mb-1">Battery drain (%/h)</div>
+          <div class="mini-wrap"><canvas id="ov-bat" role="img" aria-label="battery per device at 15s"></canvas></div>
+        </div>
+        <div class="col-12 col-sm-6">
+          <div class="mini-label mb-1">Max gap (ms)</div>
+          <div class="mini-wrap"><canvas id="ov-gap" role="img" aria-label="max gap per device at 15s"></canvas></div>
+        </div>
+        <div class="col-12">
+          <div class="mini-label mb-1">Mean temperature (°C)</div>
+          <div class="mini-wrap"><canvas id="ov-tmp" role="img" aria-label="temperature per device at 15s"></canvas></div>
+        </div>
+      </div>
     </div>
-  </div>
 
-  <div class="chart-card">
-    <div class="chart-title">Accuracy p95 — 95th Percentile (m)</div>
-    <div class="chart-subtitle">Worst-case accuracy tail — how bad does it get for 5% of samples</div>
-    <div id="legend-p95" class="legend"></div>
-    <div class="chart-wrap"><canvas id="chart-p95" role="img" aria-label="P95 accuracy by interval per device"></canvas></div>
-    <div class="callout" style="margin-top:1.25rem">
-      At 1 min, <strong>OnePlus A6000, Xiaomi, and Moto g(60)</strong> all hit 400 m p95 — completely unusable for tracking. <strong>Moto g67</strong> stays at 16.5 m even at 1 min.
+    <div class="callout p-3">
+      The <strong>OnePlus A6000</strong> is a consistent outlier across metrics — aggressive background-process killing inflates its max gap, battery consumption, and accuracy degradation compared to the other five devices.
     </div>
   </div>
-</div>
 
-<!-- ═══════════════════════════════════ BATTERY ══════════════════════════════════ -->
-<div class="page" id="page-battery">
-  <div class="page-header">
-    <h1>Battery Drain</h1>
-    <p>Percentage drop per hour — lower is better</p>
-  </div>
-
-  <div class="chart-card">
-    <div class="chart-title">Battery drain (%/h)</div>
-    <div class="chart-subtitle">How much battery the location tracker consumes per hour at each update interval</div>
-    <div id="legend-battery" class="legend"></div>
-    <div class="chart-wrap"><canvas id="chart-battery" role="img" aria-label="Battery drain per hour by interval per device"></canvas></div>
-    <div class="callout" style="margin-top:1.25rem">
-      <strong>OnePlus A6000 at 5s</strong> is a critical outlier at 16.76 %/h — its 3300 mAh battery is drained in ~6 hours. <strong>Moto g67</strong> is the most efficient (0.46–1.88 %/h range). Intervals ≥ 15s keep all devices under 4.5 %/h.
+  <!-- ══ ACCURACY ══ -->
+  <div class="page" id="page-accuracy">
+    <div class="mb-4">
+      <h1 class="page-title">GPS Accuracy</h1>
+      <p class="page-desc">Median (p50) and 95th-percentile (p95) accuracy in metres — lower is better</p>
+    </div>
+    <div class="chart-card p-3 p-md-4 mb-4">
+      <div class="chart-title mb-1">Accuracy p50 — Median (m)</div>
+      <div class="chart-subtitle mb-2">50% of samples are within this distance from ground truth</div>
+      <div id="legend-p50" class="legend-wrap mb-3"></div>
+      <div class="chart-wrap"><canvas id="chart-p50" role="img" aria-label="P50 accuracy by interval per device"></canvas></div>
+      <div class="callout p-3 mt-3">
+        <strong>Moto g67</strong> stays under 6.5 m across all intervals. <strong>OnePlus A6000</strong> degrades to 200 m at 1 min. <strong>Samsung SM-M356B</strong> excels at 1s (3.08 m) but drifts at longer intervals.
+      </div>
+    </div>
+    <div class="chart-card p-3 p-md-4 mb-4">
+      <div class="chart-title mb-1">Accuracy p95 — 95th Percentile (m)</div>
+      <div class="chart-subtitle mb-2">Worst-case accuracy tail — how bad does it get for 5% of samples</div>
+      <div id="legend-p95" class="legend-wrap mb-3"></div>
+      <div class="chart-wrap"><canvas id="chart-p95" role="img" aria-label="P95 accuracy by interval per device"></canvas></div>
+      <div class="callout p-3 mt-3">
+        At 1 min, <strong>OnePlus A6000, Xiaomi, and Moto g(60)</strong> all hit 400 m p95 — unusable for tracking. <strong>Moto g67</strong> stays at 16.5 m even at 1 min.
+      </div>
     </div>
   </div>
-</div>
 
-<!-- ═══════════════════════════════════ MAX GAP ══════════════════════════════════ -->
-<div class="page" id="page-maxgap">
-  <div class="page-header">
-    <h1>Max Gap</h1>
-    <p>Maximum observed gap between consecutive location samples (ms) — lower is better</p>
-  </div>
-
-  <div class="chart-card">
-    <div class="chart-title">Max gap (ms) — linear scale</div>
-    <div class="chart-subtitle">Raw values — dominated by outliers, useful to see the full spread</div>
-    <div id="legend-maxgap" class="legend"></div>
-    <div class="chart-wrap"><canvas id="chart-maxgap" role="img" aria-label="Max gap in ms by interval per device"></canvas></div>
-  </div>
-
-  <div class="chart-card">
-    <div class="chart-title">Max gap (ms) — log scale</div>
-    <div class="chart-subtitle">Logarithmic y-axis reveals behaviour of well-performing devices hidden by the outliers above</div>
-    <div id="legend-maxgap2" class="legend"></div>
-    <div class="chart-wrap"><canvas id="chart-maxgap2" role="img" aria-label="Max gap log scale by interval per device"></canvas></div>
-    <div class="callout" style="margin-top:1.25rem">
-      <strong>OnePlus CPH2381</strong> has a catastrophic 958 s gap at 1 min — its Doze mode kills the process. <strong>OnePlus A6000</strong> suffers at 15s (514 s). <strong>Moto g67 and Moto g(60)</strong> are the most consistent at all intervals.
+  <!-- ══ BATTERY ══ -->
+  <div class="page" id="page-battery">
+    <div class="mb-4">
+      <h1 class="page-title">Battery Drain</h1>
+      <p class="page-desc">Percentage drop per hour — lower is better</p>
+    </div>
+    <div class="chart-card p-3 p-md-4 mb-4">
+      <div class="chart-title mb-1">Battery drain (%/h)</div>
+      <div class="chart-subtitle mb-2">How much battery the location tracker consumes per hour at each update interval</div>
+      <div id="legend-battery" class="legend-wrap mb-3"></div>
+      <div class="chart-wrap"><canvas id="chart-battery" role="img" aria-label="Battery drain by interval per device"></canvas></div>
+      <div class="callout p-3 mt-3">
+        <strong>OnePlus A6000 at 5s</strong> is a critical outlier at 16.76 %/h — drained in ~6 hours. <strong>Moto g67</strong> is most efficient (0.46–1.88 %/h). Intervals ≥ 15s keep all devices under 4.5 %/h.
+      </div>
     </div>
   </div>
-</div>
 
-<!-- ═══════════════════════════════════ TEMPERATURE ══════════════════════════════ -->
-<div class="page" id="page-temp">
-  <div class="page-header">
-    <h1>Mean Temperature</h1>
-    <p>Average device temperature during each test session (°C) — contextual, watch for thermal throttling above 40°C</p>
-  </div>
-
-  <div class="chart-card">
-    <div class="chart-title">Mean temperature (°C)</div>
-    <div class="chart-subtitle">Higher update frequencies drive up CPU/GPS usage and device temperature</div>
-    <div id="legend-temp" class="legend"></div>
-    <div class="chart-wrap"><canvas id="chart-temp" role="img" aria-label="Mean temperature by interval per device"></canvas></div>
-    <div class="callout" style="margin-top:1.25rem">
-      All devices stay in a safe thermal range. The <strong>15s interval is notably the coolest</strong> (25–29°C mean) — likely GPS duty-cycle optimisation kicking in. At 1s, mean temps reach 34–37°C across all devices — sustained operation could trigger throttling on weaker SoCs.
+  <!-- ══ MAX GAP ══ -->
+  <div class="page" id="page-maxgap">
+    <div class="mb-4">
+      <h1 class="page-title">Max Gap</h1>
+      <p class="page-desc">Maximum observed gap between consecutive location samples (ms) — lower is better</p>
+    </div>
+    <div class="chart-card p-3 p-md-4 mb-4">
+      <div class="chart-title mb-1">Max gap (ms) — linear scale</div>
+      <div class="chart-subtitle mb-2">Raw values — shows the true severity of outliers</div>
+      <div id="legend-maxgap" class="legend-wrap mb-3"></div>
+      <div class="chart-wrap"><canvas id="chart-maxgap" role="img" aria-label="Max gap linear by interval per device"></canvas></div>
+    </div>
+    <div class="chart-card p-3 p-md-4 mb-4">
+      <div class="chart-title mb-1">Max gap (ms) — log scale</div>
+      <div class="chart-subtitle mb-2">Logarithmic y-axis reveals behaviour of well-performing devices hidden by outliers</div>
+      <div id="legend-maxgap2" class="legend-wrap mb-3"></div>
+      <div class="chart-wrap"><canvas id="chart-maxgap2" role="img" aria-label="Max gap log by interval per device"></canvas></div>
+      <div class="callout p-3 mt-3">
+        <strong>OnePlus CPH2381</strong> has a catastrophic 958 s gap at 1 min — Doze mode kills the process. <strong>OnePlus A6000</strong> suffers at 15s (514 s). <strong>Moto g67 and Moto g(60)</strong> are most consistent.
+      </div>
     </div>
   </div>
-</div>
 
+  <!-- ══ TEMPERATURE ══ -->
+  <div class="page" id="page-temp">
+    <div class="mb-4">
+      <h1 class="page-title">Mean Temperature</h1>
+      <p class="page-desc">Average device temperature during each test session (°C)</p>
+    </div>
+    <div class="chart-card p-3 p-md-4 mb-4">
+      <div class="chart-title mb-1">Mean temperature (°C)</div>
+      <div class="chart-subtitle mb-2">Higher update frequencies drive up CPU/GPS usage and device temperature</div>
+      <div id="legend-temp" class="legend-wrap mb-3"></div>
+      <div class="chart-wrap"><canvas id="chart-temp" role="img" aria-label="Mean temperature by interval per device"></canvas></div>
+      <div class="callout p-3 mt-3">
+        All devices stay in a safe thermal range. The <strong>15s interval is notably the coolest</strong> (25–29°C mean). At 1s, mean temps reach 34–37°C — sustained operation could trigger throttling on weaker SoCs.
+      </div>
+    </div>
+  </div>
+
+</div><!-- /container -->
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.js"></script>
 <script>
 const DEVICES = ['OnePlus A6000','OnePlus CPH2381','Moto g67 power','Samsung SM-M356B','Xiaomi 23122PCD1I','Moto g(60)'];
-const IV = ['1s','5s','15s','30s','1min'];
-
+const SHORT   = ['A6000','CPH2381','g67','SM-M356B','Xiaomi','g(60)'];
+const IV      = ['1s','5s','15s','30s','1min'];
 const PALETTE = ['#60a5fa','#34d399','#f87171','#fbbf24','#a78bfa','#fb923c'];
 const DASHES  = [[],[6,3],[2,3],[8,3],[4,2,1,2],[6,2,1,2]];
-const SHAPES  = ['circle','triangle','rect','rectRot','cross','star'];
 
 const DATA = {
-  p50: {
-    'OnePlus A6000':     [9.56,  6.97,  8.58, 10.72,200.0],
-    'OnePlus CPH2381':   [8.92,  7.59,  8.69,  8.67, 11.34],
-    'Moto g67 power':    [3.79,  6.43,  5.49,  5.19,  6.44],
-    'Samsung SM-M356B':  [3.08,  5.00, 16.00, 21.50, 24.00],
-    'Xiaomi 23122PCD1I': [3.79,  9.87,  7.47, 10.02, 24.31],
-    'Moto g(60)':        [9.94,  3.79,  6.76,  7.83, 34.53],
-  },
-  p95: {
-    'OnePlus A6000':     [12.86,14.26,18.22,30.02,400.0],
-    'OnePlus CPH2381':   [11.08,13.83,21.64,25.92, 46.59],
-    'Moto g67 power':    [ 6.82,12.37, 9.68,10.88, 16.50],
-    'Samsung SM-M356B':  [ 8.58,15.06,38.00,44.00,300.00],
-    'Xiaomi 23122PCD1I': [ 6.20,15.64,14.07,21.31,400.00],
-    'Moto g(60)':        [10.74, 7.57,11.16,16.57,400.00],
-  },
-  battery: {
-    'OnePlus A6000':     [7.95,16.76,4.44,6.46,3.19],
-    'OnePlus CPH2381':   [2.82, 3.17,1.47,2.33,0.46],
-    'Moto g67 power':    [1.88, 1.26,0.73,0.58,0.46],
-    'Samsung SM-M356B':  [2.84, 2.55,1.49,1.20,1.82],
-    'Xiaomi 23122PCD1I': [4.65, 3.73,1.85,1.80,1.38],
-    'Moto g(60)':        [1.87, 2.52,2.62,0.58,2.33],
-  },
-  maxgap: {
-    'OnePlus A6000':     [481951,352410,514996, 65003, 97079],
-    'OnePlus CPH2381':   [  1999, 11000, 29000, 55999,958350],
-    'Moto g67 power':    [  1182, 10863, 30008, 41009,102414],
-    'Samsung SM-M356B':  [ 10529, 11943, 28978, 50524,117952],
-    'Xiaomi 23122PCD1I': [  5988, 13868, 28751, 37183,110970],
-    'Moto g(60)':        [  5000,  1054, 29002, 36004, 96465],
-  },
-  temp: {
-    'OnePlus A6000':     [35.0,34.7,26.5,29.0,33.2],
-    'OnePlus CPH2381':   [36.9,34.6,29.0,31.5,33.7],
-    'Moto g67 power':    [34.0,33.6,25.5,29.9,32.4],
-    'Samsung SM-M356B':  [34.8,34.4,26.1,30.0,32.4],
-    'Xiaomi 23122PCD1I': [35.6,34.7,26.9,30.7,34.4],
-    'Moto g(60)':        [36.0,35.3,26.4,30.0,32.7],
-  },
+  p50:     { 'OnePlus A6000':[9.56,6.97,8.58,10.72,200],'OnePlus CPH2381':[8.92,7.59,8.69,8.67,11.34],'Moto g67 power':[3.79,6.43,5.49,5.19,6.44],'Samsung SM-M356B':[3.08,5,16,21.5,24],'Xiaomi 23122PCD1I':[3.79,9.87,7.47,10.02,24.31],'Moto g(60)':[9.94,3.79,6.76,7.83,34.53] },
+  p95:     { 'OnePlus A6000':[12.86,14.26,18.22,30.02,400],'OnePlus CPH2381':[11.08,13.83,21.64,25.92,46.59],'Moto g67 power':[6.82,12.37,9.68,10.88,16.5],'Samsung SM-M356B':[8.58,15.06,38,44,300],'Xiaomi 23122PCD1I':[6.2,15.64,14.07,21.31,400],'Moto g(60)':[10.74,7.57,11.16,16.57,400] },
+  battery: { 'OnePlus A6000':[7.95,16.76,4.44,6.46,3.19],'OnePlus CPH2381':[2.82,3.17,1.47,2.33,0.46],'Moto g67 power':[1.88,1.26,0.73,0.58,0.46],'Samsung SM-M356B':[2.84,2.55,1.49,1.2,1.82],'Xiaomi 23122PCD1I':[4.65,3.73,1.85,1.8,1.38],'Moto g(60)':[1.87,2.52,2.62,0.58,2.33] },
+  maxgap:  { 'OnePlus A6000':[481951,352410,514996,65003,97079],'OnePlus CPH2381':[1999,11000,29000,55999,958350],'Moto g67 power':[1182,10863,30008,41009,102414],'Samsung SM-M356B':[10529,11943,28978,50524,117952],'Xiaomi 23122PCD1I':[5988,13868,28751,37183,110970],'Moto g(60)':[5000,1054,29002,36004,96465] },
+  temp:    { 'OnePlus A6000':[35,34.7,26.5,29,33.2],'OnePlus CPH2381':[36.9,34.6,29,31.5,33.7],'Moto g67 power':[34,33.6,25.5,29.9,32.4],'Samsung SM-M356B':[34.8,34.4,26.1,30,32.4],'Xiaomi 23122PCD1I':[35.6,34.7,26.9,30.7,34.4],'Moto g(60)':[36,35.3,26.4,30,32.7] },
 };
 
-const GRID  = 'rgba(255,255,255,0.07)';
-const TICK  = '#6b7280';
-const TITLE_C = '#9ca3af';
+const GRID = 'rgba(255,255,255,0.07)';
+const TICK = '#6b7280';
 
-function baseOptions(yLabel, extra={}) {
+function lineDatasets(metric) {
+  return DEVICES.map((dev,i) => ({
+    label: dev, data: DATA[metric][dev],
+    borderColor: PALETTE[i], backgroundColor: PALETTE[i]+'22',
+    borderDash: DASHES[i], borderWidth: 2.5,
+    pointBackgroundColor: PALETTE[i], pointBorderColor: '#0b0e14', pointBorderWidth: 2,
+    pointRadius: 5, pointHoverRadius: 8, tension: 0.3, fill: false,
+  }));
+}
+
+function lineOptions(yLabel, extraY={}) {
   return {
-    responsive: true,
-    maintainAspectRatio: false,
+    responsive: true, maintainAspectRatio: false,
     interaction: { mode: 'index', intersect: false },
     plugins: {
       legend: { display: false },
       tooltip: {
-        backgroundColor: '#1a1f2b',
-        borderColor: '#252b38',
-        borderWidth: 1,
-        titleColor: '#e8eaf0',
-        bodyColor: '#9ca3af',
-        padding: 12,
-        callbacks: {
-          label: ctx => ` ${ctx.dataset.label}: ${ctx.parsed.y !== null ? ctx.parsed.y.toLocaleString(undefined,{maximumFractionDigits:2}) : 'N/A'}`,
-        }
+        backgroundColor: '#1a1f2b', borderColor: '#252b38', borderWidth: 1,
+        titleColor: '#e8eaf0', bodyColor: '#9ca3af', padding: 10,
+        callbacks: { label: ctx => ` ${ctx.dataset.label}: ${ctx.parsed.y !== null ? ctx.parsed.y.toLocaleString(undefined,{maximumFractionDigits:2}) : 'N/A'}` }
       }
     },
     scales: {
-      x: {
-        ticks: { color: TICK, font: { size: 12 }, autoSkip: false },
-        grid:  { color: GRID },
-        title: { display: true, text: 'Update interval', color: TITLE_C, font: { size: 12 } },
-      },
-      y: {
-        ticks: { color: TICK, font: { size: 11 } },
-        grid:  { color: GRID },
-        title: { display: true, text: yLabel, color: TITLE_C, font: { size: 12 } },
-        ...extra,
-      }
+      x: { ticks:{ color:TICK, font:{size:11}, autoSkip:false }, grid:{ color:GRID }, title:{ display:true, text:'Update interval', color:TICK, font:{size:11} } },
+      y: { ticks:{ color:TICK, font:{size:10} }, grid:{ color:GRID }, title:{ display:true, text:yLabel, color:TICK, font:{size:11} }, ...extraY }
     },
-    animation: { duration: 600, easing: 'easeOutQuart' },
+    animation: { duration: 500 },
   };
 }
 
-function datasets(metric) {
-  return DEVICES.map((dev, i) => ({
-    label: dev,
-    data: DATA[metric][dev],
-    borderColor: PALETTE[i],
-    backgroundColor: PALETTE[i] + '22',
-    borderDash: DASHES[i],
-    borderWidth: 2.5,
-    pointBackgroundColor: PALETTE[i],
-    pointBorderColor: '#0b0e14',
-    pointBorderWidth: 2,
-    pointRadius: 6,
-    pointHoverRadius: 9,
-    tension: 0.3,
-    fill: false,
-  }));
+function makeLine(id, metric, yLabel, extraY={}) {
+  return new Chart(document.getElementById(id), {
+    type: 'line', data: { labels: IV, datasets: lineDatasets(metric) }, options: lineOptions(yLabel, extraY)
+  });
 }
 
-function buildLegend(containerId, metric, chartId) {
+function buildLegend(containerId, chartId) {
   const wrap = document.getElementById(containerId);
-  DEVICES.forEach((dev, i) => {
+  DEVICES.forEach((dev,i) => {
     const item = document.createElement('div');
     item.className = 'legend-item';
     item.innerHTML = `<span class="legend-swatch" style="background:${PALETTE[i]}"></span><span>${dev}</span>`;
@@ -513,94 +311,76 @@ function buildLegend(containerId, metric, chartId) {
   });
 }
 
-function makeChart(id, metric, yLabel, extraY={}) {
-  return new Chart(document.getElementById(id), {
-    type: 'line',
-    data: { labels: IV, datasets: datasets(metric) },
-    options: baseOptions(yLabel, extraY),
+function makeBar(id, metric, fmtFn) {
+  const vals = DEVICES.map(d => DATA[metric][d][2]);
+  new Chart(document.getElementById(id), {
+    type: 'bar',
+    data: { labels: SHORT, datasets: [{ data: vals, backgroundColor: PALETTE.map(c=>c+'cc'), borderColor: PALETTE, borderWidth: 1.5, borderRadius: 4 }] },
+    options: {
+      responsive: true, maintainAspectRatio: false,
+      plugins: {
+        legend: { display: false },
+        tooltip: {
+          backgroundColor: '#1a1f2b', borderColor: '#252b38', borderWidth: 1,
+          titleColor: '#e8eaf0', bodyColor: '#9ca3af',
+          callbacks: {
+            title: ctx => DEVICES[ctx[0].dataIndex],
+            label: ctx => ' ' + (fmtFn ? fmtFn(ctx.parsed.y) : ctx.parsed.y.toLocaleString(undefined,{maximumFractionDigits:2}))
+          }
+        }
+      },
+      scales: {
+        x: { ticks:{ color:TICK, font:{size:10} }, grid:{ display:false } },
+        y: { ticks:{ color:TICK, font:{size:10}, callback: fmtFn||(v=>v) }, grid:{ color:GRID } }
+      }
+    }
   });
 }
 
-// ── BUILD CHARTS ──
 window.addEventListener('load', () => {
+  // Overview bars
+  makeBar('ov-p50','p50');
+  makeBar('ov-p95','p95');
+  makeBar('ov-bat','battery');
+  makeBar('ov-gap','maxgap', v => v>=1000 ? (v/1000).toFixed(0)+'k' : v);
+  makeBar('ov-tmp','temp');
 
-  // ACCURACY
-  makeChart('chart-p50', 'p50', 'Accuracy p50 (m)');
-  buildLegend('legend-p50', 'p50', 'chart-p50');
+  // Accuracy
+  makeLine('chart-p50','p50','Accuracy p50 (m)');
+  buildLegend('legend-p50','chart-p50');
+  makeLine('chart-p95','p95','Accuracy p95 (m)');
+  buildLegend('legend-p95','chart-p95');
 
-  makeChart('chart-p95', 'p95', 'Accuracy p95 (m)');
-  buildLegend('legend-p95', 'p95', 'chart-p95');
+  // Battery
+  makeLine('chart-battery','battery','Battery drain (%/h)');
+  buildLegend('legend-battery','chart-battery');
 
-  // BATTERY
-  makeChart('chart-battery', 'battery', 'Battery drain (%/h)');
-  buildLegend('legend-battery', 'battery', 'chart-battery');
-
-  // MAX GAP — linear
-  makeChart('chart-maxgap', 'maxgap', 'Max gap (ms)');
-  buildLegend('legend-maxgap', 'maxgap', 'chart-maxgap');
-
-  // MAX GAP — log
-  makeChart('chart-maxgap2', 'maxgap', 'Max gap (ms) — log', {
-    type: 'logarithmic',
-    ticks: {
-      color: TICK,
-      font: { size: 11 },
-      callback: v => v >= 1000 ? (v/1000).toFixed(0)+'k ms' : v+' ms',
-    }
+  // Max gap
+  makeLine('chart-maxgap','maxgap','Max gap (ms)');
+  buildLegend('legend-maxgap','chart-maxgap');
+  makeLine('chart-maxgap2','maxgap','Max gap (ms)', {
+    type:'logarithmic',
+    ticks:{ color:TICK, font:{size:10}, callback: v => v>=1000?(v/1000).toFixed(0)+'k ms':v+' ms' }
   });
-  buildLegend('legend-maxgap2', 'maxgap', 'chart-maxgap2');
+  buildLegend('legend-maxgap2','chart-maxgap2');
 
-  // TEMP
-  makeChart('chart-temp', 'temp', 'Mean temperature (°C)', { min: 20, max: 42 });
-  buildLegend('legend-temp', 'temp', 'chart-temp');
-
-  // OVERVIEW BAR CHARTS — 15s snapshot
-  const idx15 = 2;
-  const shortNames = ['A6000','CPH2381','g67','SM-M356B','Xiaomi','g(60)'];
-
-  function makeBarChart(id, metric, fmtFn) {
-    const vals = DEVICES.map(d => DATA[metric][d][idx15]);
-    new Chart(document.getElementById(id), {
-      type: 'bar',
-      data: {
-        labels: shortNames,
-        datasets: [{ data: vals, backgroundColor: PALETTE.map(c => c + 'cc'), borderColor: PALETTE, borderWidth: 1.5, borderRadius: 4 }]
-      },
-      options: {
-        responsive: true, maintainAspectRatio: false,
-        plugins: {
-          legend: { display: false },
-          tooltip: {
-            backgroundColor: '#1a1f2b', borderColor: '#252b38', borderWidth: 1,
-            titleColor: '#e8eaf0', bodyColor: '#9ca3af',
-            callbacks: {
-              title: ctx => DEVICES[ctx[0].dataIndex],
-              label: ctx => ' ' + (fmtFn ? fmtFn(ctx.parsed.y) : ctx.parsed.y.toLocaleString(undefined, {maximumFractionDigits: 2}))
-            }
-          }
-        },
-        scales: {
-          x: { ticks: { color: '#6b7280', font: { size: 11 } }, grid: { display: false } },
-          y: { ticks: { color: '#6b7280', font: { size: 10 }, callback: fmtFn || (v => v) }, grid: { color: 'rgba(255,255,255,0.07)' } }
-        }
-      }
-    });
-  }
-
-  makeBarChart('ov-p50', 'p50');
-  makeBarChart('ov-p95', 'p95');
-  makeBarChart('ov-bat', 'battery');
-  makeBarChart('ov-gap', 'maxgap', v => v >= 1000 ? (v/1000).toFixed(0)+'k' : v);
-  makeBarChart('ov-tmp', 'temp');
+  // Temp
+  makeLine('chart-temp','temp','Mean temp (°C)', { min:20, max:42 });
+  buildLegend('legend-temp','chart-temp');
 });
 
-// ── NAV ──
-document.querySelectorAll('.nav-btn').forEach(btn => {
-  btn.addEventListener('click', () => {
-    document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
+// NAV
+document.querySelectorAll('.nav-link[data-page]').forEach(link => {
+  link.addEventListener('click', e => {
+    e.preventDefault();
+    document.querySelectorAll('.nav-link[data-page]').forEach(l => l.classList.remove('active'));
     document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
-    btn.classList.add('active');
-    document.getElementById('page-' + btn.dataset.page).classList.add('active');
+    link.classList.add('active');
+    document.getElementById('page-' + link.dataset.page).classList.add('active');
+    // close mobile menu
+    const menu = document.getElementById('navMenu');
+    if (menu.classList.contains('show')) bootstrap.Collapse.getInstance(menu)?.hide();
+    window.scrollTo(0,0);
   });
 });
 </script>
